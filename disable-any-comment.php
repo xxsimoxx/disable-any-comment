@@ -18,26 +18,16 @@
 if( !defined( 'ABSPATH' ) )
 	exit;
 
-class Disable_Comments {
-	private static $instance = null;
+class DisableAnyComment {
+
 	private $networkactive;
+	
 	private $modified_types = array();
 
-	public static function get_instance() {
-		if ( is_null( self::$instance ) ) {
-			self::$instance = new self;
-		}
-		return self::$instance;
-	}
-
 	function __construct() {
-
 		$this->networkactive = ( is_multisite() && array_key_exists( plugin_basename( __FILE__ ), (array) get_site_option( 'active_sitewide_plugins' ) ) );
-		
 		$this->init_filters();
 	}
-
-
 
 	private function init_filters() {
 		// These need to happen now
@@ -94,7 +84,7 @@ class Disable_Comments {
 				add_filter( 'plugin_action_links', array( $this, 'plugin_actions_links'), 10, 2 );
 			}
 
-			add_action( 'admin_menu', array( $this, 'filter_admin_menu' ), PHP_INT_MAX );	// do this as late as possible
+			add_action( 'admin_menu', array( $this, 'filter_admin_menu' ), PHP_INT_MAX );
 			add_action( 'admin_print_styles-index.php', array( $this, 'admin_css' ) );
 			add_action( 'admin_print_styles-profile.php', array( $this, 'admin_css' ) );
 			add_action( 'wp_dashboard_setup', array( $this, 'filter_dashboard' ) );
@@ -181,7 +171,7 @@ class Disable_Comments {
 	 */
 	private function tools_page_url() {
 		$base =  $this->networkactive ? network_admin_url( 'settings.php' ) : admin_url( 'tools.php' );
-		return add_query_arg( 'page', 'disable_comments_tools', $base );
+		return add_query_arg( 'page', 'disable_any_comment_tools', $base );
 	}
 
 	public function filter_admin_menu(){
@@ -241,9 +231,9 @@ class Disable_Comments {
 	public function tools_menu() {
 		$title = __( 'Delete Comments', 'disable-comments' );
 		if( $this->networkactive )
-			add_submenu_page( 'settings.php', $title, $title, 'manage_network_plugins', 'disable_comments_tools', array( $this, 'tools_page' ) );
+			add_submenu_page( 'settings.php', $title, $title, 'manage_network_plugins', 'disable_any_comment_tools', array( $this, 'tools_page' ) );
 		else
-			add_submenu_page( 'tools.php', $title, $title, 'manage_options', 'disable_comments_tools', array( $this, 'tools_page' ) );
+			add_submenu_page( 'tools.php', $title, $title, 'manage_options', 'disable_any_comment_tools', array( $this, 'tools_page' ) );
 	}
 
 	public function tools_page() {
@@ -252,4 +242,5 @@ class Disable_Comments {
 
 }
 
-Disable_Comments::get_instance();
+// Fire.
+new DisableAnyComment;
