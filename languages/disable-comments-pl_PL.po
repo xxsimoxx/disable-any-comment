@@ -1,0 +1,68 @@
+# Copyright (C) 2015 Disable Comments
+# This file is distributed under the same license as the Disable Comments package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Disable Comments 1.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/disable-comments\n"
+"POT-Creation-Date: 2019-12-14T16:17:49+01:00\n"
+"PO-Revision-Date: 2015-04-30 22:12+0100\n"
+"Last-Translator: Maciej Gryniuk <maciejka45@gmail.com>\n"
+"Language-Team: Maciej Gryniuk <maciejka45@gmail.com>\n"
+"Language: pl_PL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8beta1\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: includes/tools-page.php:35
+msgid "All comments have been deleted."
+msgstr ""
+
+#. Description of the plugin
+#, fuzzy
+msgid "Allows administrators to globally disable comments on their site."
+msgstr ""
+"Umożliwia administratorom możliwość globalnego wyłączenia komentarzy na "
+"stronie internetowej. Komentarze mogą zostać wyłączone odpowiednio dla "
+"różnych rodzajów wpisów."
+
+#: disable-any-comment.php:242 includes/tools-page.php:7
+#: includes/tools-page.php:56
+#, fuzzy
+msgid "Delete Comments"
+msgstr "Wyłączenie komentarzy"
+
+#. Plugin Name of the plugin
+#, fuzzy
+msgid "Disable Any Comment"
+msgstr "Wyłączenie komentarzy"
+
+#. Author of the plugin
+msgid "Gieffe edizioni srl"
+msgstr ""
+
+#: includes/tools-page.php:37 includes/tools-page.php:40
+msgid "Internal error occured. Please try again later."
+msgstr ""
+
+#: includes/tools-page.php:12 includes/tools-page.php:46
+msgid "No comments available for deletion."
+msgstr ""
+
+#: includes/tools-page.php:55
+#, fuzzy
+msgid "Total Comments: "
+msgstr "Wyłączenie komentarzy"
+
+#. Plugin URI of the plugin
+msgid "https://software.gieffeedizioni.it"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.gieffeedizioni.it"
+msgstr ""
+
+

@@ -1,0 +1,58 @@
+# Copyright (C) 2019 Gieffe edizioni srl
+# This file is distributed under the same license as the Disable Any Comment plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Disable Any Comment 1.0.0-rc1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/disable-comments\n"
+"Last-Translator: root <simone@gieffeedizioni.it>\n"
+"Language-Team: Italian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2019-12-14T16:17:49+01:00\n"
+"PO-Revision-Date: 2019-12-14 16:22+0100\n"
+"X-Generator: WP-CLI 2.3.0\n"
+"X-Domain: disable-comments\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Plugin Name of the plugin
+msgid "Disable Any Comment"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://software.gieffeedizioni.it"
+msgstr ""
+
+#. Description of the plugin
+msgid "Allows administrators to globally disable comments on their site."
+msgstr "Permette agli amministratori di disabilitare globalmente i commenti sul loro sito."
+
+#. Author of the plugin
+msgid "Gieffe edizioni srl"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.gieffeedizioni.it"
+msgstr ""
+
+#: disable-any-comment.php:242 includes/tools-page.php:7
+#: includes/tools-page.php:56
+msgid "Delete Comments"
+msgstr "Cancella Commenti"
+
+#: includes/tools-page.php:12 includes/tools-page.php:46
+msgid "No comments available for deletion."
+msgstr "Non ci sono commenti da cancellare"
+
+#: includes/tools-page.php:35
+msgid "All comments have been deleted."
+msgstr "Tutti i commenti sono stati cancellati"
+
+#: includes/tools-page.php:37 includes/tools-page.php:40
+msgid "Internal error occured. Please try again later."
+msgstr "Errore interno. Riprova piu' tardi."
+
+#: includes/tools-page.php:55
+msgid "Total Comments: "
+msgstr "Commenti totali: "

@@ -1,0 +1,66 @@
+# Copyright (C) 2013 Disable Comments
+# This file is distributed under the same license as the Disable Comments package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Disable Comments 1.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/disable-comments\n"
+"POT-Creation-Date: 2019-12-14T16:17:49+01:00\n"
+"PO-Revision-Date: 2015-09-02 13:00+0430\n"
+"Last-Translator: fxbenard | FxB <fx@fxbenard.com>\n"
+"Language-Team: faraed.com <support@faraed.com>\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.2\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: includes/tools-page.php:35
+msgid "All comments have been deleted."
+msgstr ""
+
+#. Description of the plugin
+#, fuzzy
+msgid "Allows administrators to globally disable comments on their site."
+msgstr ""
+"اجازه می دهد تا مدیران  به  نظرات در سایت خود همگانی را غیر فعال کنند. نظرات "
+"را می توان با توجه به نوع پست خاصی غیر فعال کرد."
+
+#: disable-any-comment.php:242 includes/tools-page.php:7
+#: includes/tools-page.php:56
+#, fuzzy
+msgid "Delete Comments"
+msgstr "غیر فعال کردن نظرات"
+
+#. Plugin Name of the plugin
+#, fuzzy
+msgid "Disable Any Comment"
+msgstr "غیر فعال کردن نظرات"
+
+#. Author of the plugin
+msgid "Gieffe edizioni srl"
+msgstr ""
+
+#: includes/tools-page.php:37 includes/tools-page.php:40
+msgid "Internal error occured. Please try again later."
+msgstr ""
+
+#: includes/tools-page.php:12 includes/tools-page.php:46
+msgid "No comments available for deletion."
+msgstr ""
+
+#: includes/tools-page.php:55
+#, fuzzy
+msgid "Total Comments: "
+msgstr "غیر فعال کردن نظرات"
+
+#. Plugin URI of the plugin
+msgid "https://software.gieffeedizioni.it"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.gieffeedizioni.it"
+msgstr ""
+
+
