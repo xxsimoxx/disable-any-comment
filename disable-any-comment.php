@@ -14,6 +14,7 @@
  * This plugin is forked from Disable Comments v. 1.9.0 by Samir Shah (http://www.rayofsolaris.net/)
  * 
  */
+namespace XXSimoXX\DisableAnyComment;
 
 if( !defined( 'ABSPATH' ) )
 	exit;

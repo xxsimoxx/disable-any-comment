@@ -1,4 +1,7 @@
 <?php
+
+namespace XXSimoXX\DisableAnyComment;
+
 if( !defined( 'ABSPATH' ) ) {
 	exit;
 }
