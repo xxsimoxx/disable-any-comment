@@ -222,7 +222,11 @@ class DisableAnyComment {
 		if( $file == $plugin && current_user_can('manage_options') ) {
 			array_unshift(
 				$links,
+<<<<<<< HEAD
 				sprintf( '<a href="%s"><i style="font: 16px dashicons; vertical-align: text-bottom;" class="dashicon dashicons-admin-tools"></i></a>', esc_attr( $this->tools_page_url()))
+=======
+				sprintf( '<a href="%s"><i styel="font: 16px dashicons; vertical-align: text-bottom;" class="dashicon dashicons-admin-tools"></i></a>', esc_attr( $this->tools_page_url() ),)
+>>>>>>> 1206d2fb29f9cc6a77ca5210cbd237e41b0f952b
 			);
 		}
 
