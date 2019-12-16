@@ -19,6 +19,10 @@ namespace XXSimoXX\DisableAnyComment;
 if(!defined('ABSPATH'))
 	exit;
 
+// Add auto updater
+// https://codepotent.com/classicpress/plugins/update-manager/
+require_once( 'includes/UpdateClient.class.php' );
+
 class DisableAnyComment {
 
 	private $networkactive;
