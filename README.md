@@ -3,7 +3,7 @@
 **Allows administrators to globally disable comments on their site.**
 
 - Activating this plugin disables every comment.
-- Under the "Tools" menu you can find "Delete Comments" that allows you to delete already made comments.
+- Under the "Tools" menu you can find "Delete Comments" that allows you to bulk delete already made comments.
 
 This plugin is made specifically to use with [ClassicPress](https://classicpress.net).
 
