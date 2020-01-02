@@ -1,7 +1,7 @@
 === Disable Any Comment ===
 Plugin Name:        Disable Any Comment
 Description:        Allows administrators to globally disable comments on their site.
-Version:            1.0.0-rc2
+Version:            1.0.0
 Text Domain:        disable-comments
 Domain Path:        /languages
 Requires PHP:       5.6
@@ -10,7 +10,7 @@ Tested:             4.9.99
 Author:             Gieffe edizioni
 Author URI:         https://www.gieffeedizioni.it
 Plugin URI:         https://software.gieffeedizioni.it
-Download link:      https://github.com/xxsimoxx/disable-any-comment/releases/download/v1.0.0-rc2/disable-any-comment.zip
+Download link:      https://github.com/xxsimoxx/disable-any-comment/releases/download/v1.0.0/disable-any-comment.zip
 License:            GPLv2
 License URI:        https://www.gnu.org/licenses/gpl-2.0.html
 
