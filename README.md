@@ -10,5 +10,7 @@ This plugin is made specifically to use with [ClassicPress](https://classicpress
 ### Credits
 This plugin is forked from Disable Comments v. 1.9.0 by [Samir Shah](http://www.rayofsolaris.net/).
 
+### Privacy
+**To help us know the number of active installations of this plugin, we collect and store anonymized data when the plugin check in for updates. The date and unique plugin identifier are stored as plain text and the requesting URL is stored as a non-reversible hashed value. This data is stored for up to 28 days.**
 
 
