@@ -30,22 +30,22 @@ if (isset($_POST['delete']) && isset($_POST['delete_mode'])) {
 	check_admin_referer( 'delete-comments-admin' );
 
 	if($_POST['delete_mode'] == 'delete_everywhere') {
-		if ( $wpdb->query("TRUNCATE $wpdb->commentmeta") != FALSE ){
-            if ( $wpdb->query("TRUNCATE $wpdb->comments") != FALSE ){
-                $wpdb->query("UPDATE $wpdb->posts SET comment_count = 0 WHERE post_author != 0");
-                $wpdb->query("OPTIMIZE TABLE $wpdb->commentmeta");
-                $wpdb->query("OPTIMIZE TABLE $wpdb->comments");
-            	echo "<p style='color:green'><strong>" . __('All comments have been deleted.', 'disable-comments') . "</strong></p>";
-            } else {
-	            echo "<p style='color:red'><strong>" . __('Internal error occured. Please try again later.', 'disable-comments') . "</strong></p>";
-            }
-        } else {
-            echo "<p style='color:red'><strong>" . __('Internal error occured. Please try again later.', 'disable-comments') . "</strong></p>";
-        }
+		if ( $wpdb->query("TRUNCATE $wpdb->commentmeta") != false ) {
+			if ( $wpdb->query("TRUNCATE $wpdb->comments") != false ){
+				$wpdb->query("UPDATE $wpdb->posts SET comment_count  = 0 WHERE post_author != 0");
+				$wpdb->query("OPTIMIZE TABLE $wpdb->commentmeta");
+				$wpdb->query("OPTIMIZE TABLE $wpdb->comments");
+				echo "<p style='color:green'><strong>" . __('All comments have been deleted.', 'disable-comments') . "</strong></p>";
+			} else {
+				echo "<p style='color:red'><strong>" . __('Internal error occured. Please try again later.', 'disable-comments') . "</strong></p>";
+			}
+		} else {
+			echo "<p style='color:red'><strong>" . __('Internal error occured. Please try again later.', 'disable-comments') . "</strong></p>";
+		}
 	}
 
 	$comments_count = $wpdb->get_var("SELECT count(comment_id) from $wpdb->comments");
-	if ( $comments_count <= 0 ) { 
+	if ( $comments_count <= 0 ) {
 		echo '<p><strong>' . __('No comments available for deletion.', 'disable-comments') . '</strong></p></div>';
 		return;
 	}

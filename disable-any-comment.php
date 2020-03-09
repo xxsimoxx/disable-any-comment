@@ -9,10 +9,10 @@
  * License: GPL2
  * Text Domain: disable-comments
  * Domain Path: /languages/
- * 
- * 
+ *
+ *
  * This plugin is forked from Disable Comments v. 1.9.0 by Samir Shah (http://www.rayofsolaris.net/)
- * 
+ *
  */
 namespace XXSimoXX\DisableAnyComment;
 
@@ -26,7 +26,7 @@ require_once( 'includes/UpdateClient.class.php' );
 class DisableAnyComment {
 
 	private $networkactive;
-	
+
 	private $modified_types = [];
 
 	function __construct() {
@@ -44,7 +44,7 @@ class DisableAnyComment {
 		add_action('admin_init', [$this, 'filter_admin_bar']);
 
 		// These can happen later
-		add_action('plugins_loaded',[$this, 'register_text_domain']); 
+		add_action('plugins_loaded',[$this, 'register_text_domain']);
 		add_action('wp_loaded', [$this, 'init_wploaded_filters']);
 	}
 
@@ -53,7 +53,7 @@ class DisableAnyComment {
 	}
 
 	public function init_wploaded_filters() {
-	
+
 		$typeargs = ['public' => true];
 		if($this->networkactive) {
 			$typeargs['_builtin'] = true;
@@ -95,7 +95,7 @@ class DisableAnyComment {
 			add_action('wp_dashboard_setup', [$this, 'filter_dashboard']);
 			add_filter('pre_option_default_pingback_flag', '__return_zero');
 		}
-		
+
 		// Filters for front end only
 		else {
 			add_action('template_redirect', [$this, 'check_comment_template']);
@@ -179,7 +179,7 @@ class DisableAnyComment {
 		return add_query_arg('page', 'disable_any_comment_tools', $base);
 	}
 
-	public function filter_admin_menu(){
+	public function filter_admin_menu() {
 		global $pagenow;
 
 		if ($pagenow == 'comment.php' || $pagenow == 'edit-comments.php')
@@ -193,7 +193,7 @@ class DisableAnyComment {
 		remove_submenu_page('options-general.php', 'options-discussion.php');
 	}
 
-	public function filter_dashboard(){
+	public function filter_dashboard() {
 		remove_meta_box('dashboard_recent_comments', 'dashboard', 'normal');
 	}
 
