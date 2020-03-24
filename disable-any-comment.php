@@ -3,7 +3,7 @@
  * Plugin Name: Disable Any Comment
  * Plugin URI: https://software.gieffeedizioni.it
  * Description: Allows administrators to globally disable comments on their site.
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author: Gieffe edizioni srl
  * Author URI: https://www.gieffeedizioni.it
  * License: GPL2
@@ -16,12 +16,13 @@
  */
 namespace XXSimoXX\DisableAnyComment;
 
-if(!defined('ABSPATH'))
+if (!defined('ABSPATH')) {
 	exit;
+}
 
 // Add auto updater
 // https://codepotent.com/classicpress/plugins/update-manager/
-require_once( 'includes/UpdateClient.class.php' );
+require_once('includes/UpdateClient.class.php');
 
 class DisableAnyComment {
 
@@ -44,30 +45,31 @@ class DisableAnyComment {
 		add_action('admin_init', [$this, 'filter_admin_bar']);
 
 		// These can happen later
-		add_action('plugins_loaded',[$this, 'register_text_domain']);
+		add_action('plugins_loaded', [$this, 'register_text_domain']);
 		add_action('wp_loaded', [$this, 'init_wploaded_filters']);
 	}
 
 	public function register_text_domain() {
-		load_plugin_textdomain('disable-comments', false, dirname(plugin_basename(__FILE__)) . '/languages');
+		load_plugin_textdomain('disable-comments', false, dirname(plugin_basename(__FILE__)).'/languages');
 	}
 
 	public function init_wploaded_filters() {
 
 		$typeargs = ['public' => true];
-		if($this->networkactive) {
+		if ($this->networkactive) {
 			$typeargs['_builtin'] = true;
 		}
 		$disable_post_types = get_post_types($typeargs);
-		foreach(array_keys($disable_post_types) as $type) {
-			if(!in_array($type, $this->modified_types) && !post_type_supports($type, 'comments'))
+		foreach (array_keys($disable_post_types) as $type) {
+			if (!in_array($type, $this->modified_types) && !post_type_supports($type, 'comments')) {
 				unset($disable_post_types[$type]);
+			}
 		}
 
-		if(!empty($disable_post_types)) {
-			foreach($disable_post_types as $type) {
+		if (!empty($disable_post_types)) {
+			foreach ($disable_post_types as $type) {
 				// we need to know what native support was for later
-				if(post_type_supports($type, 'comments')) {
+				if (post_type_supports($type, 'comments')) {
 					$this->modified_types[] = $type;
 					remove_post_type_support($type, 'comments');
 					remove_post_type_support($type, 'trackbacks');
@@ -78,13 +80,12 @@ class DisableAnyComment {
 			add_filter('pings_open', [$this, 'filter_comment_status'], 20, 2);
 		}
 
-		// Filters for the admin only
-		if(is_admin()) {
-			if($this->networkactive) {
+		if (is_admin()) {
+			// Filters for the admin only
+			if ($this->networkactive) {
 				add_action('network_admin_menu', [$this, 'tools_menu']);
 				add_filter('network_admin_plugin_action_links', [$this, 'plugin_actions_links'], 10, 2);
-			}
-			else {
+			} else {
 				add_action('admin_menu', [$this, 'tools_menu' ]);
 				add_filter('plugin_action_links', [$this, 'plugin_actions_links'], 10, 2);
 			}
@@ -94,10 +95,8 @@ class DisableAnyComment {
 			add_action('admin_print_styles-profile.php', [$this, 'admin_css']);
 			add_action('wp_dashboard_setup', [$this, 'filter_dashboard']);
 			add_filter('pre_option_default_pingback_flag', '__return_zero');
-		}
-
-		// Filters for front end only
-		else {
+		} else {
+			// Filters for front end only
 			add_action('template_redirect', [$this, 'check_comment_template']);
 			add_filter('feed_links_show_comments_feed', '__return_false');
 		}
@@ -109,8 +108,8 @@ class DisableAnyComment {
 	 * and set it to True
 	 */
 	public function check_comment_template() {
-		if(is_singular()) {
-			if(!defined('DISABLE_COMMENTS_REMOVE_COMMENTS_TEMPLATE') || DISABLE_COMMENTS_REMOVE_COMMENTS_TEMPLATE == true) {
+		if (is_singular()) {
+			if (!defined('DISABLE_COMMENTS_REMOVE_COMMENTS_TEMPLATE') || DISABLE_COMMENTS_REMOVE_COMMENTS_TEMPLATE == true) {
 				// Kill the comments template.
 				add_filter('comments_template', [$this, 'dummy_comments_template'], 20);
 			}
@@ -122,7 +121,7 @@ class DisableAnyComment {
 	}
 
 	public function dummy_comments_template() {
-		return dirname(__FILE__) . '/includes/comments-template.php';
+		return dirname(__FILE__).'/includes/comments-template.php';
 	}
 
 
@@ -138,7 +137,7 @@ class DisableAnyComment {
 	 * Issue a 403 for all comment feed requests.
 	 */
 	public function filter_query() {
-		if(is_comment_feed()) {
+		if (is_comment_feed()) {
 			wp_die(__('Comments are closed.'), '', ['response' => 403]);
 		}
 	}
@@ -147,10 +146,10 @@ class DisableAnyComment {
 	 * Remove comment links from the admin bar.
 	 */
 	public function filter_admin_bar() {
-		if(is_admin_bar_showing()) {
+		if (is_admin_bar_showing()) {
 			// Remove comments links from admin bar
 			remove_action('admin_bar_menu', 'wp_admin_bar_comments_menu', 60);
-			if(is_multisite()) {
+			if (is_multisite()) {
 				add_action('admin_bar_menu', [$this, 'remove_network_comment_links'], 500);
 			}
 		}
@@ -160,14 +159,13 @@ class DisableAnyComment {
 	 * Remove comment links from the admin bar in a multisite network.
 	 */
 	public function remove_network_comment_links($wp_admin_bar) {
-		if($this->networkactive && is_user_logged_in()) {
-			foreach((array) $wp_admin_bar->user->blogs as $blog) {
-				$wp_admin_bar->remove_menu('blog-' . $blog->userblog_id . '-c');
+		if ($this->networkactive && is_user_logged_in()) {
+			foreach ((array) $wp_admin_bar->user->blogs as $blog) {
+				$wp_admin_bar->remove_menu('blog-'.$blog->userblog_id.'-c');
 			}
-		}
-		else {
+		} else {
 			// We have no way to know whether the plugin is active on other sites, so only remove this one
-			$wp_admin_bar->remove_menu('blog-' . get_current_blog_id() . '-c');
+			$wp_admin_bar->remove_menu('blog-'.get_current_blog_id().'-c');
 		}
 	}
 
@@ -175,20 +173,22 @@ class DisableAnyComment {
 	 * Return context-aware tools page URL
 	 */
 	private function tools_page_url() {
-		$base =  $this->networkactive ? network_admin_url('settings.php') : admin_url('tools.php');
+		$base = $this->networkactive ? network_admin_url('settings.php') : admin_url('tools.php');
 		return add_query_arg('page', 'disable_any_comment_tools', $base);
 	}
 
 	public function filter_admin_menu() {
 		global $pagenow;
 
-		if ($pagenow == 'comment.php' || $pagenow == 'edit-comments.php')
+		if ($pagenow == 'comment.php' || $pagenow == 'edit-comments.php') {
 			wp_die(__('Comments are closed.'), '', ['response' => 403]);
+		}
 
 		remove_menu_page('edit-comments.php');
 
-		if ($pagenow == 'options-discussion.php')
+		if ($pagenow == 'options-discussion.php') {
 			wp_die(__('Comments are closed.'), '', ['response' => 403]);
+		}
 
 		remove_submenu_page('options-general.php', 'options-discussion.php');
 	}
@@ -223,7 +223,7 @@ class DisableAnyComment {
 	public function plugin_actions_links($links, $file) {
 		static $plugin;
 		$plugin = plugin_basename(__FILE__);
-		if($file == $plugin && current_user_can('manage_options')) {
+		if ($file == $plugin && current_user_can('manage_options')) {
 			array_unshift(
 				$links,
 				sprintf('<a href="%s"><i style="font: 16px dashicons; vertical-align: text-bottom;" class="dashicon dashicons-admin-tools"></i></a>', esc_attr($this->tools_page_url()))
@@ -234,14 +234,15 @@ class DisableAnyComment {
 
 	public function tools_menu() {
 		$title = __('Delete Comments', 'disable-comments');
-		if($this->networkactive)
+		if ($this->networkactive) {
 			add_submenu_page('settings.php', $title, $title, 'manage_network_plugins', 'disable_any_comment_tools', [ $this, 'tools_page' ]);
-		else
+		} else {
 			add_submenu_page('tools.php', $title, $title, 'manage_options', 'disable_any_comment_tools', [ $this, 'tools_page' ]);
+		}
 	}
 
 	public function tools_page() {
-		include dirname(__FILE__) . '/includes/tools-page.php';
+		include dirname(__FILE__).'/includes/tools-page.php';
 	}
 
 }
