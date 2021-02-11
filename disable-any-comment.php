@@ -61,19 +61,21 @@ class DisableAnyComment {
 		}
 		$disable_post_types = get_post_types($typeargs);
 		foreach (array_keys($disable_post_types) as $type) {
-			if (!in_array($type, $this->modified_types) && !post_type_supports($type, 'comments')) {
-				unset($disable_post_types[$type]);
+			if (in_array($type, $this->modified_types) || post_type_supports($type, 'comments')) {
+				continue;
 			}
+			unset($disable_post_types[$type]);
 		}
 
 		if (!empty($disable_post_types)) {
 			foreach ($disable_post_types as $type) {
 				// we need to know what native support was for later
 				if (post_type_supports($type, 'comments')) {
-					$this->modified_types[] = $type;
-					remove_post_type_support($type, 'comments');
-					remove_post_type_support($type, 'trackbacks');
+					continue;
 				}
+				$this->modified_types[] = $type;
+				remove_post_type_support($type, 'comments');
+				remove_post_type_support($type, 'trackbacks');
 			}
 			add_filter('comments_array', [$this, 'filter_existing_comments'], 20, 2);
 			add_filter('comments_open', [$this, 'filter_comment_status'], 20, 2);
@@ -108,16 +110,17 @@ class DisableAnyComment {
 	 * and set it to True
 	 */
 	public function check_comment_template() {
-		if (is_singular()) {
-			if (!defined('DISABLE_COMMENTS_REMOVE_COMMENTS_TEMPLATE') || DISABLE_COMMENTS_REMOVE_COMMENTS_TEMPLATE == true) {
-				// Kill the comments template.
-				add_filter('comments_template', [$this, 'dummy_comments_template'], 20);
-			}
-			// Remove comment-reply script for themes that include it indiscriminately
-			wp_deregister_script('comment-reply');
-			// feed_links_extra inserts a comments RSS link
-			remove_action('wp_head', 'feed_links_extra', 3);
+		if (!is_singular()) {
+			return;
 		}
+		if (!defined('DISABLE_COMMENTS_REMOVE_COMMENTS_TEMPLATE') || DISABLE_COMMENTS_REMOVE_COMMENTS_TEMPLATE === true) {
+			// Kill the comments template.
+			add_filter('comments_template', [$this, 'dummy_comments_template'], 20);
+		}
+		// Remove comment-reply script for themes that include it indiscriminately
+		wp_deregister_script('comment-reply');
+		// feed_links_extra inserts a comments RSS link
+		remove_action('wp_head', 'feed_links_extra', 3);
 	}
 
 	public function dummy_comments_template() {
@@ -138,21 +141,24 @@ class DisableAnyComment {
 	 */
 	public function filter_query() {
 		if (is_comment_feed()) {
-			wp_die(__('Comments are closed.'), '', ['response' => 403]);
+			return;
 		}
+		wp_die(__('Comments are closed.'), '', ['response' => 403]);
 	}
 
 	/*
 	 * Remove comment links from the admin bar.
 	 */
 	public function filter_admin_bar() {
-		if (is_admin_bar_showing()) {
-			// Remove comments links from admin bar
-			remove_action('admin_bar_menu', 'wp_admin_bar_comments_menu', 60);
-			if (is_multisite()) {
-				add_action('admin_bar_menu', [$this, 'remove_network_comment_links'], 500);
-			}
+		if (!is_admin_bar_showing()) {
+			return;
 		}
+		// Remove comments links from admin bar
+		remove_action('admin_bar_menu', 'wp_admin_bar_comments_menu', 60);
+		if (!is_multisite()) {
+			return;
+		}
+		add_action('admin_bar_menu', [$this, 'remove_network_comment_links'], 500);
 	}
 
 	/*
@@ -180,13 +186,13 @@ class DisableAnyComment {
 	public function filter_admin_menu() {
 		global $pagenow;
 
-		if ($pagenow == 'comment.php' || $pagenow == 'edit-comments.php') {
+		if ($pagenow === 'comment.php' || $pagenow === 'edit-comments.php') {
 			wp_die(__('Comments are closed.'), '', ['response' => 403]);
 		}
 
 		remove_menu_page('edit-comments.php');
 
-		if ($pagenow == 'options-discussion.php') {
+		if ($pagenow === 'options-discussion.php') {
 			wp_die(__('Comments are closed.'), '', ['response' => 403]);
 		}
 
@@ -223,7 +229,7 @@ class DisableAnyComment {
 	public function plugin_actions_links($links, $file) {
 		static $plugin;
 		$plugin = plugin_basename(__FILE__);
-		if ($file == $plugin && current_user_can('manage_options')) {
+		if ($file === $plugin && current_user_can('manage_options')) {
 			array_unshift(
 				$links,
 				sprintf('<a href="%s"><i style="font: 16px dashicons; vertical-align: text-bottom;" class="dashicon dashicons-admin-tools"></i></a>', esc_attr($this->tools_page_url()))

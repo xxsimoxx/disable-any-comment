@@ -20,20 +20,22 @@ $typeargs = ['public' => true];
 if ($this->networkactive) {
 	$typeargs['_builtin'] = true;	// stick to known types for network
 }
+
 $types = get_post_types($typeargs, 'objects');
 foreach (array_keys($types) as $type) {
-	if (!in_array($type, $this->modified_types) && !post_type_supports($type, 'comments')) {
-		// the type doesn't support comments anyway
-		unset($types[$type]);
+	if (in_array($type, $this->modified_types) || post_type_supports($type, 'comments')) {
+		continue;
 	}
+	// the type doesn't support comments anyway
+	unset($types[$type]);
 }
 
 if (isset($_POST['delete']) && isset($_POST['delete_mode'])) {
 	check_admin_referer('delete-comments-admin');
 
-	if ($_POST['delete_mode'] == 'delete_everywhere') {
-		if ($wpdb->query("TRUNCATE $wpdb->commentmeta") != false) {
-			if ($wpdb->query("TRUNCATE $wpdb->comments") != false) {
+	if ($_POST['delete_mode'] === 'delete_everywhere') {
+		if ($wpdb->query("TRUNCATE $wpdb->commentmeta") !== false) {
+			if ($wpdb->query("TRUNCATE $wpdb->comments") !== false) {
 				$wpdb->query("UPDATE $wpdb->posts SET comment_count  = 0 WHERE post_author != 0");
 				$wpdb->query("OPTIMIZE TABLE $wpdb->commentmeta");
 				$wpdb->query("OPTIMIZE TABLE $wpdb->comments");
