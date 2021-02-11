@@ -140,7 +140,7 @@ class DisableAnyComment {
 	 * Issue a 403 for all comment feed requests.
 	 */
 	public function filter_query() {
-		if (is_comment_feed()) {
+		if (!is_comment_feed()) {
 			return;
 		}
 		wp_die(__('Comments are closed.'), '', ['response' => 403]);
