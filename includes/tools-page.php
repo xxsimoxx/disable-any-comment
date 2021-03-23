@@ -31,7 +31,13 @@ foreach (array_keys($types) as $type) {
 }
 
 if (isset($_POST['delete']) && isset($_POST['delete_mode'])) {
-	check_admin_referer('delete-comments-admin');
+
+	if (check_admin_referer('delete-comments-admin') === false) {
+		wp_die(__('Nonce error.'), 'disable-comments');
+	}
+	if (current_user_can('moderate_comments')) {
+		wp_die(__('You are not allowed to do this.'), 'disable-comments');
+	}
 
 	if ($_POST['delete_mode'] === 'delete_everywhere') {
 		if ($wpdb->query("TRUNCATE $wpdb->commentmeta") !== false) {
