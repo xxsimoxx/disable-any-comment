@@ -28,8 +28,6 @@ class DisableAnyComment {
 
 	private $networkactive;
 
-	private $modified_types = [];
-
 	function __construct() {
 		$this->networkactive = (is_multisite() && array_key_exists(plugin_basename(__FILE__), (array) get_site_option('active_sitewide_plugins')));
 		$this->init_filters();
@@ -69,7 +67,6 @@ class DisableAnyComment {
 
 		if (!empty($disable_post_types)) {
 			foreach ($disable_post_types as $type) {
-				$this->modified_types[] = $type;
 				remove_post_type_support($type, 'comments');
 				remove_post_type_support($type, 'trackbacks');
 			}
