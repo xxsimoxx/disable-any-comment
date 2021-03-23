@@ -61,7 +61,7 @@ class DisableAnyComment {
 		}
 		$disable_post_types = get_post_types($typeargs);
 		foreach (array_keys($disable_post_types) as $type) {
-			if (in_array($type, $this->modified_types) || post_type_supports($type, 'comments')) {
+			if (post_type_supports($type, 'comments')) {
 				continue;
 			}
 			unset($disable_post_types[$type]);
@@ -69,10 +69,6 @@ class DisableAnyComment {
 
 		if (!empty($disable_post_types)) {
 			foreach ($disable_post_types as $type) {
-				// we need to know what native support was for later
-				if (post_type_supports($type, 'comments')) {
-					continue;
-				}
 				$this->modified_types[] = $type;
 				remove_post_type_support($type, 'comments');
 				remove_post_type_support($type, 'trackbacks');

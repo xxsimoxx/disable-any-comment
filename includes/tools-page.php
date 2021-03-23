@@ -35,7 +35,7 @@ if (isset($_POST['delete']) && isset($_POST['delete_mode'])) {
 	if (check_admin_referer('delete-comments-admin') === false) {
 		wp_die(__('Nonce error.'), 'disable-comments');
 	}
-	if (current_user_can('moderate_comments')) {
+	if (!current_user_can('moderate_comments')) {
 		wp_die(__('You are not allowed to do this.'), 'disable-comments');
 	}
 
