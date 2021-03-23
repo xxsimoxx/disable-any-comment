@@ -16,20 +16,6 @@ if ($comments_count <= 0) {
 	return;
 }
 
-$typeargs = ['public' => true];
-if ($this->networkactive) {
-	$typeargs['_builtin'] = true;	// stick to known types for network
-}
-
-$types = get_post_types($typeargs, 'objects');
-foreach (array_keys($types) as $type) {
-	if (in_array($type, $this->modified_types) || post_type_supports($type, 'comments')) {
-		continue;
-	}
-	// the type doesn't support comments anyway
-	unset($types[$type]);
-}
-
 if (isset($_POST['delete']) && isset($_POST['delete_mode'])) {
 
 	if (check_admin_referer('delete-comments-admin') === false) {
