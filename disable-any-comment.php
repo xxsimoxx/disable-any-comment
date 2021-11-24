@@ -28,7 +28,7 @@ class DisableAnyComment {
 
 	private $networkactive;
 
-	function __construct() {
+	public function __construct() {
 		$this->networkactive = (is_multisite() && array_key_exists(plugin_basename(__FILE__), (array) get_site_option('active_sitewide_plugins')));
 		$this->init_filters();
 	}
@@ -136,7 +136,7 @@ class DisableAnyComment {
 		if (!is_comment_feed()) {
 			return;
 		}
-		wp_die(__('Comments are closed.'), '', ['response' => 403]);
+		wp_die('Comments are closed.', '', ['response' => 403]);
 	}
 
 	/*
@@ -180,13 +180,13 @@ class DisableAnyComment {
 		global $pagenow;
 
 		if ($pagenow === 'comment.php' || $pagenow === 'edit-comments.php') {
-			wp_die(__('Comments are closed.'), '', ['response' => 403]);
+			wp_die('Comments are closed.', '', ['response' => 403]);
 		}
 
 		remove_menu_page('edit-comments.php');
 
 		if ($pagenow === 'options-discussion.php') {
-			wp_die(__('Comments are closed.'), '', ['response' => 403]);
+			wp_die('Comments are closed.', '', ['response' => 403]);
 		}
 
 		remove_submenu_page('options-general.php', 'options-discussion.php');
