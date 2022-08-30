@@ -3,9 +3,11 @@
  * Plugin Name: Disable Any Comment
  * Plugin URI: https://software.gieffeedizioni.it
  * Description: Allows administrators to globally disable comments on their site.
- * Version: 1.0.5
+ * Version: 1.0.6
  * Author: Gieffe edizioni srl
  * Author URI: https://www.gieffeedizioni.it
+ * Requires PHP: 5.6
+ * Requires CP: 1.0
  * License: GPL2
  * Text Domain: disable-comments
  * Domain Path: /languages/
