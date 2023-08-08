@@ -3,7 +3,7 @@
  * Plugin Name: Disable Any Comment
  * Plugin URI: https://software.gieffeedizioni.it
  * Description: Allows administrators to globally disable comments on their site.
- * Version: 1.0.7
+ * Version: 1.0.8
  * Author: Gieffe edizioni srl
  * Author URI: https://www.gieffeedizioni.it
  * Requires PHP: 5.6
@@ -227,7 +227,11 @@ class DisableAnyComment {
 		if ($file === $plugin && current_user_can('manage_options')) {
 			array_unshift(
 				$links,
-				sprintf('<a href="%s"><i style="font: 16px dashicons; vertical-align: text-bottom;" class="dashicon dashicons-admin-tools"></i></a>', esc_attr($this->tools_page_url()))
+				sprintf(
+					'<a href="%s" title="%s"><i style="font: 16px dashicons; vertical-align: text-bottom;" class="dashicon dashicons-trash"></i></a>',
+					esc_attr($this->tools_page_url()),
+					esc_html__('Delete Comments', 'disable-comments')
+				)
 			);
 		}
 		return $links;
